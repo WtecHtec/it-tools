@@ -8,14 +8,14 @@ import { config } from '@/config';
 
 const toolStore = useToolStore();
 
-useHead({ title: 'IT Tools - Handy online tools for developers' });
+useHead({ title: '不求人之工具集合-web\前端\后端开发使用工具、图片转换、时间转换、加密等工具' });
 const { t } = useI18n();
 </script>
 
 <template>
   <div class="pt-50px">
     <div class="grid-wrapper">
-      <div v-if="config.showBanner" class="grid grid-cols-1 gap-12px lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
+      <!-- <div v-if="config.showBanner" class="grid grid-cols-1 gap-12px lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
         <ColoredCard :title="$t('home.follow.title')" :icon="Heart">
           {{ $t('home.follow.p1') }}
           <a
@@ -34,12 +34,12 @@ const { t } = useI18n();
           {{ $t('home.follow.thankYou') }}
           <n-icon :component="Heart" />
         </ColoredCard>
-      </div>
+      </div> -->
 
       <transition name="height">
         <div v-if="toolStore.favoriteTools.length > 0">
           <h3 class="mb-5px mt-25px font-500 text-neutral-400">
-            {{ $t('home.categories.favoriteTools') }}
+            最近使用
           </h3>
           <div class="grid grid-cols-1 gap-12px lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
             <ToolCard v-for="tool in toolStore.favoriteTools" :key="tool.name" :tool="tool" />
@@ -56,12 +56,16 @@ const { t } = useI18n();
         </div>
       </div>
 
-      <h3 class="mb-5px mt-25px font-500 text-neutral-400">
-        {{ $t('home.categories.allTools') }}
-      </h3>
-      <div class="grid grid-cols-1 gap-12px lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
-        <ToolCard v-for="tool in toolStore.tools" :key="tool.name" :tool="tool" />
+			<div v-for="category in toolStore.toolsByCategory">
+				<h3 class="mb-5px mt-25px font-500 text-neutral-400">
+        {{  category.name }}
+      	</h3>
+				<div class="grid grid-cols-1 gap-12px lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
+        <ToolCard v-for="tool in category.components" :key="tool.name" :tool="tool" />
       </div>
+			</div>
+     
+   
     </div>
   </div>
 </template>

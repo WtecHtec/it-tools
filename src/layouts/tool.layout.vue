@@ -39,9 +39,9 @@ const toolDescription = computed<string>(() => t(`tools.${i18nKey.value}.descrip
             {{ toolTitle }}
           </n-h1>
 
-          <div>
+          <!-- <div>
             <FavoriteButton :tool="{ name: route.meta.name } as Tool" />
-          </div>
+          </div> -->
         </div>
 
         <div class="separator" />

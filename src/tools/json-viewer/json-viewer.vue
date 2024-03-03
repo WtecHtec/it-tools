@@ -11,7 +11,10 @@ const inputElement = ref<HTMLElement>();
 const rawJson = useStorage('json-prettify:raw-json', '{"hello": "world", "foo": "bar"}');
 const indentSize = useStorage('json-prettify:indent-size', 3);
 const sortKeys = useStorage('json-prettify:sort-keys', true);
-const cleanJson = computed(() => withDefaultOnError(() => formatJson({ rawJson, indentSize, sortKeys }), ''));
+const cleanJson = computed(() => withDefaultOnError(() => {
+	console.log(rawJson)
+	return formatJson({ rawJson, indentSize, sortKeys })
+} , ''));
 
 const rawJsonValidation = useValidation({
   source: rawJson,

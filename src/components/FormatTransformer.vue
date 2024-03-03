@@ -12,6 +12,7 @@ const props = withDefaults(
     inputDefault?: string
     outputLabel?: string
     outputLanguage?: string
+		inputShow?: boolean,
   }>(),
   {
     transformer: _.identity,
@@ -21,10 +22,11 @@ const props = withDefaults(
     inputPlaceholder: 'Input...',
     outputLabel: 'Output',
     outputLanguage: '',
+		inputShow: true,
   },
 );
 
-const { transformer, inputValidationRules, inputLabel, outputLabel, outputLanguage, inputPlaceholder, inputDefault }
+const { inputShow = true, transformer, inputValidationRules, inputLabel, outputLabel, outputLanguage, inputPlaceholder, inputDefault }
   = toRefs(props);
 
 const inputElement = ref<typeof CInputText>();
@@ -35,6 +37,7 @@ const output = computed(() => transformer.value(input.value));
 
 <template>
   <CInputText
+	 	v-if="inputShow"
     ref="inputElement"
     v-model:value="input"
     :placeholder="inputPlaceholder"

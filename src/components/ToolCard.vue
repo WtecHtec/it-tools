@@ -2,14 +2,25 @@
 import { useThemeVars } from 'naive-ui';
 import FavoriteButton from './FavoriteButton.vue';
 import type { Tool } from '@/tools/tools.types';
-
-const props = defineProps<{ tool: Tool & { category: string } }>();
+import { useToolStore } from '@/tools/tools.store';
+const toolStore = useToolStore();
+const props = defineProps<{ tool: Tool | any & { category: string } }>();
 const { tool } = toRefs(props);
 const theme = useThemeVars();
+
+function toggleFavorite(event: MouseEvent) {
+  event.preventDefault();
+
+  if (toolStore.isToolFavorite({ tool })) {
+    toolStore.removeToolFromFavorites({ tool });
+  }
+
+  toolStore.addToolToFavorites({ tool });
+}
 </script>
 
 <template>
-  <router-link :to="tool.path" class="decoration-none">
+  <router-link @click.native="toggleFavorite" :to="tool.path" class="decoration-none">
     <c-card class="h-full transition transition-duration-0.5s !border-2px !hover:border-primary">
       <div flex items-center justify-between>
         <n-icon class="text-neutral-400 dark:text-neutral-600" size="40" :component="tool.icon" />
@@ -25,7 +36,7 @@ const theme = useThemeVars();
             {{ $t('toolCard.new') }}
           </div>
 
-          <FavoriteButton :tool="tool" />
+          <!-- <FavoriteButton :tool="tool" /> -->
         </div>
       </div>
 
